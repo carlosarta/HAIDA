@@ -1,0 +1,410 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-01-20",
+  "structure": [
+    {
+      "id": "master-reference",
+      "title": "Master Reference",
+      "description": "Configuración global y fuente única de verdad",
+      "icon": "Database",
+      "badge": "Esencial",
+      "order": 0,
+      "documents": [
+        {
+          "id": "00-readme",
+          "title": "Hub de Navegación",
+          "path": "/docs/00-MASTER-REFERENCE/00-README.md",
+          "badge": "START HERE",
+          "priority": "critical"
+        },
+        {
+          "id": "00-master-urls",
+          "title": "Master URLs & Configs",
+          "path": "/docs/00-MASTER-REFERENCE/00-MASTER-URLS-CONFIGS.md",
+          "badge": "Confidencial",
+          "priority": "high"
+        },
+        {
+          "id": "00-quick-start",
+          "title": "Quick Start Guide",
+          "path": "/docs/00-MASTER-REFERENCE/00-QUICK-START.md",
+          "badge": "5 min",
+          "priority": "high"
+        },
+        {
+          "id": "02-troubleshooting",
+          "title": "Troubleshooting",
+          "path": "/docs/TROUBLESHOOTING.md",
+          "priority": "high"
+        },
+        {
+          "id": "03-checklist",
+          "title": "Master Checklist",
+          "path": "/docs/00-MASTER-REFERENCE/03-MASTER-CHECKLIST.md",
+          "priority": "medium"
+        }
+      ]
+    },
+    {
+      "id": "frontend",
+      "title": "Frontend",
+      "description": "React, TypeScript, Radix UI, Tailwind CSS",
+      "icon": "Code",
+      "order": 1,
+      "documents": [
+        {
+          "id": "architecture",
+          "title": "Arquitectura Frontend",
+          "path": "/docs/01-FRONTEND/ARCHITECTURE.md",
+          "priority": "high"
+        },
+        {
+          "id": "components",
+          "title": "Componentes UI",
+          "path": "/docs/01-FRONTEND/COMPONENTS.md",
+          "priority": "medium"
+        },
+        {
+          "id": "routing",
+          "title": "Enrutamiento",
+          "path": "/docs/01-FRONTEND/ROUTING.md",
+          "priority": "medium"
+        },
+        {
+          "id": "state-management",
+          "title": "Gestión de Estado",
+          "path": "/docs/01-FRONTEND/STATE-MANAGEMENT.md",
+          "priority": "medium"
+        },
+        {
+          "id": "styling",
+          "title": "Guía de Estilos",
+          "path": "/docs/01-FRONTEND/STYLING.md",
+          "priority": "low"
+        }
+      ]
+    },
+    {
+      "id": "backend",
+      "title": "Backend",
+      "description": "API Reference, Servicios, Autenticación",
+      "icon": "Server",
+      "order": 2,
+      "documents": [
+        {
+          "id": "api-reference",
+          "title": "API Reference",
+          "path": "/docs/02-BACKEND/API-REFERENCE.md",
+          "badge": "Importante",
+          "priority": "high"
+        },
+        {
+          "id": "services",
+          "title": "Servicios",
+          "path": "/docs/02-BACKEND/SERVICES.md",
+          "priority": "high"
+        },
+        {
+          "id": "authentication",
+          "title": "Autenticación",
+          "path": "/docs/AUTHENTICATION-GUIDE.md",
+          "priority": "high"
+        },
+        {
+          "id": "error-handling",
+          "title": "Manejo de Errores",
+          "path": "/docs/02-BACKEND/ERROR-HANDLING.md",
+          "priority": "medium"
+        }
+      ]
+    },
+    {
+      "id": "database",
+      "title": "Database",
+      "description": "PostgreSQL, Supabase, RLS, Backups",
+      "icon": "Database",
+      "order": 3,
+      "documents": [
+        {
+          "id": "schema",
+          "title": "Esquema de Base de Datos",
+          "path": "/docs/03-DATABASE/SCHEMA.md",
+          "priority": "high"
+        },
+        {
+          "id": "rls-policies",
+          "title": "Row Level Security",
+          "path": "/docs/03-DATABASE/RLS-POLICIES.md",
+          "priority": "high"
+        },
+        {
+          "id": "migrations",
+          "title": "Migraciones",
+          "path": "/docs/03-DATABASE/MIGRATIONS.md",
+          "priority": "medium"
+        },
+        {
+          "id": "backups",
+          "title": "Backups & Recovery",
+          "path": "/docs/03-DATABASE/BACKUPS.md",
+          "priority": "medium"
+        }
+      ]
+    },
+    {
+      "id": "integrations",
+      "title": "Integraciones",
+      "description": "Postman, Jira, Confluence, Telegram, Microsoft 365",
+      "icon": "Puzzle",
+      "badge": "Importante",
+      "order": 4,
+      "documents": [
+        {
+          "id": "microsoft-365",
+          "title": "Microsoft 365",
+          "path": "/docs/MICROSOFT-365-INTEGRATION.md",
+          "badge": "SSO",
+          "priority": "critical"
+        },
+        {
+          "id": "postman",
+          "title": "Postman API",
+          "path": "/docs/04-INTEGRATIONS/POSTMAN.md",
+          "priority": "high"
+        },
+        {
+          "id": "jira-confluence",
+          "title": "Jira & Confluence",
+          "path": "/docs/04-INTEGRATIONS/JIRA-CONFLUENCE.md",
+          "priority": "high"
+        },
+        {
+          "id": "telegram",
+          "title": "Bot de Telegram",
+          "path": "/docs/04-INTEGRATIONS/TELEGRAM.md",
+          "priority": "medium"
+        },
+        {
+          "id": "sync-service",
+          "title": "Servicio de Sincronización",
+          "path": "/docs/04-INTEGRATIONS/SYNC-SERVICE.md",
+          "priority": "medium"
+        }
+      ]
+    },
+    {
+      "id": "requirements",
+      "title": "Requirements",
+      "description": "BRDs, Especificaciones Funcionales, User Stories",
+      "icon": "FileText",
+      "order": 5,
+      "documents": [
+        {
+          "id": "functional-requirements",
+          "title": "Requisitos Funcionales",
+          "path": "/docs/05-REQUIREMENTS/FUNCTIONAL.md",
+          "priority": "high"
+        },
+        {
+          "id": "non-functional-requirements",
+          "title": "Requisitos No Funcionales",
+          "path": "/docs/05-REQUIREMENTS/NON-FUNCTIONAL.md",
+          "priority": "medium"
+        },
+        {
+          "id": "user-stories",
+          "title": "User Stories",
+          "path": "/docs/05-REQUIREMENTS/USER-STORIES.md",
+          "priority": "medium"
+        },
+        {
+          "id": "roadmap",
+          "title": "Roadmap",
+          "path": "/docs/ROADMAP.md",
+          "priority": "low"
+        }
+      ]
+    },
+    {
+      "id": "testing",
+      "title": "Testing",
+      "description": "Estrategia de Testing, ISTQB, Automatización",
+      "icon": "CheckCircle",
+      "badge": "QA",
+      "order": 6,
+      "documents": [
+        {
+          "id": "testing-strategy",
+          "title": "Estrategia de Testing",
+          "path": "/docs/06-TESTING/TESTING-STRATEGY.md",
+          "badge": "ISTQB",
+          "priority": "high"
+        },
+        {
+          "id": "test-case-creation",
+          "title": "Creación de Casos",
+          "path": "/docs/06-TESTING/TEST-CASE-CREATION.md",
+          "priority": "high"
+        },
+        {
+          "id": "automation",
+          "title": "Automatización",
+          "path": "/docs/06-TESTING/AUTOMATION.md",
+          "badge": "Playwright",
+          "priority": "medium"
+        },
+        {
+          "id": "coverage",
+          "title": "Cobertura de Pruebas",
+          "path": "/docs/06-TESTING/COVERAGE.md",
+          "priority": "medium"
+        },
+        {
+          "id": "data-driven",
+          "title": "Data-Driven Testing",
+          "path": "/docs/DATA-DRIVEN-CONFIG.md",
+          "priority": "medium"
+        }
+      ]
+    },
+    {
+      "id": "postman-collections",
+      "title": "Postman Collections",
+      "description": "Colecciones, Entornos, Newman",
+      "icon": "Package",
+      "order": 7,
+      "documents": [
+        {
+          "id": "collections-overview",
+          "title": "Visión General",
+          "path": "/docs/07-POSTMAN/COLLECTIONS-OVERVIEW.md",
+          "priority": "high"
+        },
+        {
+          "id": "privalia-collection",
+          "title": "PRIVALIA Collection",
+          "path": "/docs/07-POSTMAN/PRIVALIA.md",
+          "priority": "medium"
+        },
+        {
+          "id": "ctb-collection",
+          "title": "CTB Collection",
+          "path": "/docs/07-POSTMAN/CTB.md",
+          "priority": "medium"
+        },
+        {
+          "id": "newman-automation",
+          "title": "Automatización con Newman",
+          "path": "/docs/07-POSTMAN/NEWMAN.md",
+          "priority": "medium"
+        }
+      ]
+    },
+    {
+      "id": "repositories",
+      "title": "Repositories",
+      "description": "CI/CD, GitHub Actions, Git Flow",
+      "icon": "GitBranch",
+      "order": 8,
+      "documents": [
+        {
+          "id": "git-workflow",
+          "title": "Git Workflow",
+          "path": "/docs/08-REPOSITORIES/GIT-WORKFLOW.md",
+          "priority": "high"
+        },
+        {
+          "id": "ci-cd",
+          "title": "CI/CD Pipeline",
+          "path": "/docs/08-REPOSITORIES/CI-CD.md",
+          "priority": "high"
+        },
+        {
+          "id": "github-actions",
+          "title": "GitHub Actions",
+          "path": "/docs/08-REPOSITORIES/GITHUB-ACTIONS.md",
+          "priority": "medium"
+        },
+        {
+          "id": "versioning",
+          "title": "Versionado Semántico",
+          "path": "/docs/08-REPOSITORIES/VERSIONING.md",
+          "priority": "low"
+        }
+      ]
+    },
+    {
+      "id": "configuration",
+      "title": "Configuration",
+      "description": "Deployment, Docker, Variables de Entorno",
+      "icon": "Settings",
+      "order": 9,
+      "documents": [
+        {
+          "id": "deployment",
+          "title": "Deployment",
+          "path": "/docs/09-CONFIGURATION/DEPLOYMENT.md",
+          "badge": "DevOps",
+          "priority": "high"
+        },
+        {
+          "id": "docker",
+          "title": "Docker & Docker Compose",
+          "path": "/docs/09-CONFIGURATION/DOCKER.md",
+          "priority": "high"
+        },
+        {
+          "id": "environment-variables",
+          "title": "Variables de Entorno",
+          "path": "/docs/09-CONFIGURATION/ENVIRONMENT.md",
+          "priority": "high"
+        },
+        {
+          "id": "monitoring",
+          "title": "Monitoreo y Logs",
+          "path": "/docs/09-CONFIGURATION/MONITORING.md",
+          "priority": "medium"
+        }
+      ]
+    },
+    {
+      "id": "branding",
+      "title": "Branding Hiberus",
+      "description": "Guía de estilo editorial-tech",
+      "icon": "Palette",
+      "order": 10,
+      "documents": [
+        {
+          "id": "style-guide",
+          "title": "Guía de Estilo",
+          "path": "/docs/10-BRANDING/STYLE-GUIDE.md",
+          "priority": "medium"
+        },
+        {
+          "id": "typography",
+          "title": "Tipografía",
+          "path": "/docs/10-BRANDING/TYPOGRAPHY.md",
+          "priority": "medium"
+        },
+        {
+          "id": "color-palette",
+          "title": "Paleta de Colores",
+          "path": "/docs/10-BRANDING/COLOR-PALETTE.md",
+          "priority": "medium"
+        },
+        {
+          "id": "components",
+          "title": "Componentes UI",
+          "path": "/docs/10-BRANDING/UI-COMPONENTS.md",
+          "priority": "low"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "totalSections": 11,
+    "totalDocuments": 57,
+    "lastReview": "2026-01-20",
+    "maintainer": "Hiberus Tecnología"
+  }
+}
