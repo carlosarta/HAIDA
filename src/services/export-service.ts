@@ -592,15 +592,34 @@ function extractFunctionalModules(cases: TestCase[], suites: TestSuite[]): Funct
     modules.get(module)!.push(testCase);
   });
 
-  return Array.from(modules.entries()).map(([name, testCases]) => ({
-    id: name.toLowerCase().replace(/\s+/g, '-'),
-    name,
-    description: `Módulo funcional: ${name}`,
-    type: inferModuleType(name),
-    testCases: testCases.map(c => `TC_${c.id}`),
-    requirements: [], // TODO: extraer de descripción
-    coverage: Math.random() * 100, // TODO: calcular real
-  }));
+  return Array.from(modules.entries()).map(([name, testCases]) => {
+    // Extract unique requirements from all test cases in this module
+    const moduleRequirements = new Set<string>();
+    let testCasesWithRequirements = 0;
+
+    testCases.forEach(tc => {
+      const reqIds = extractRequirementIds(tc.description);
+      reqIds.forEach(id => moduleRequirements.add(id));
+      if (reqIds.length > 0) {
+        testCasesWithRequirements++;
+      }
+    });
+
+    // Calculate coverage as percentage of test cases with mapped requirements
+    const coverage = testCases.length > 0
+      ? (testCasesWithRequirements / testCases.length) * 100
+      : 0;
+
+    return {
+      id: name.toLowerCase().replace(/\s+/g, '-'),
+      name,
+      description: `Módulo funcional: ${name}`,
+      type: inferModuleType(name),
+      testCases: testCases.map(c => `TC_${c.id}`),
+      requirements: Array.from(moduleRequirements),
+      coverage,
+    };
+  });
 }
 
 function inferModuleType(moduleName: string): 'functional' | 'api' | 'ui' | 'security' {
