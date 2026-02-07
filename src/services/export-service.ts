@@ -374,23 +374,31 @@ export function generateIntegrationsConfig(
     collections: postmanConfig.colecciones,
   }] : [];
 
-  // Jira
+  // Jira - count synced issues from sync-service
   const jiraConfig = PROYECTOS_JIRA[projectKey];
+  const syncedTestCases = obtenerCasosPrueba();
+  const syncedIssuesCount = syncedTestCases.filter(tc =>
+    tc.proyectoId === project.id && tc.jiraIssueKey
+  ).length;
   const jiraProjects: JiraProjectConfig[] = jiraConfig ? [{
     key: project.key,
     name: project.name,
     jiraKey: jiraConfig.key,
     issueTypes: ['Test', 'Bug', 'Task', 'Story'],
-    syncedIssues: 0, // TODO: contar desde sync-service
+    syncedIssues: syncedIssuesCount,
   }] : [];
 
-  // Confluence
+  // Confluence - count synced pages from sync-service
   const confluenceConfig = ESPACIOS_CONFLUENCE[projectKey];
+  const syncedDocuments = obtenerDocumentos();
+  const syncedPagesCount = syncedDocuments.filter(doc =>
+    doc.proyectoId === project.id && doc.confluencePageId
+  ).length;
   const confluenceSpaces: ConfluenceSpaceConfig[] = confluenceConfig ? [{
     projectKey: project.key,
     spaceKey: confluenceConfig.key,
     spaceName: confluenceConfig.nombre,
-    pageCount: 0, // TODO: contar desde sync-service
+    pageCount: syncedPagesCount,
   }] : [];
 
   // Telegram

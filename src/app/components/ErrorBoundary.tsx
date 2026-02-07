@@ -1,17 +1,154 @@
 /**
  * 🛡️ HAIDA - Error Boundary
- * 
+ *
  * Componente de React que captura errores en el árbol de componentes
  * y muestra una UI de fallback amigable.
- * 
+ *
  * SEGURIDAD: Previene que errores críticos colapsen toda la aplicación
- * 
+ *
  * @module ErrorBoundary
  */
 
 import { Component, ReactNode, ErrorInfo } from 'react';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
 import { Button } from './ui/button';
+
+// ============================================
+// ERROR LOGGING SERVICE
+// ============================================
+
+interface ErrorLogEntry {
+  id: string;
+  timestamp: string;
+  error: {
+    name: string;
+    message: string;
+    stack?: string;
+  };
+  componentStack?: string;
+  url: string;
+  userAgent: string;
+  appVersion: string;
+}
+
+const ERROR_LOG_KEY = 'haida_error_log';
+const MAX_ERROR_ENTRIES = 50;
+
+/**
+ * Error Logging Service
+ * Stores errors locally and provides integration points for external services
+ */
+const errorLoggingService = {
+  /**
+   * Log an error to the error logging service
+   */
+  captureException(error: Error, context?: { componentStack?: string; extra?: Record<string, unknown> }): void {
+    const entry: ErrorLogEntry = {
+      id: `err_${Date.now().toString(36)}_${Math.random().toString(36).substr(2, 5)}`,
+      timestamp: new Date().toISOString(),
+      error: {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      },
+      componentStack: context?.componentStack,
+      url: window.location.href,
+      userAgent: navigator.userAgent,
+      appVersion: import.meta.env.VITE_APP_VERSION || '3.0.0',
+    };
+
+    // Store in localStorage
+    this.storeError(entry);
+
+    // Log to console in development
+    if (import.meta.env.DEV) {
+      console.group('🔴 Error Logged');
+      console.error('Error:', error);
+      console.log('Entry ID:', entry.id);
+      console.log('Timestamp:', entry.timestamp);
+      if (context?.extra) console.log('Extra:', context.extra);
+      console.groupEnd();
+    }
+
+    // Integration point: Send to external service (Sentry, LogRocket, etc.)
+    // Uncomment and configure when ready:
+    // if (window.Sentry) {
+    //   window.Sentry.captureException(error, { extra: context });
+    // }
+    // if (window.LogRocket) {
+    //   window.LogRocket.captureException(error);
+    // }
+
+    // Send to backend API for persistent logging (if configured)
+    this.sendToBackend(entry).catch(() => {
+      // Silently fail - we already have local storage as backup
+    });
+  },
+
+  /**
+   * Store error in localStorage with limit
+   */
+  storeError(entry: ErrorLogEntry): void {
+    try {
+      const logs = this.getErrorLog();
+      logs.unshift(entry);
+
+      // Keep only the last N entries
+      if (logs.length > MAX_ERROR_ENTRIES) {
+        logs.splice(MAX_ERROR_ENTRIES);
+      }
+
+      localStorage.setItem(ERROR_LOG_KEY, JSON.stringify(logs));
+    } catch (e) {
+      // Storage might be full, try to clear old entries
+      try {
+        localStorage.removeItem(ERROR_LOG_KEY);
+        localStorage.setItem(ERROR_LOG_KEY, JSON.stringify([entry]));
+      } catch {
+        // Give up silently
+      }
+    }
+  },
+
+  /**
+   * Get all stored error logs
+   */
+  getErrorLog(): ErrorLogEntry[] {
+    try {
+      const data = localStorage.getItem(ERROR_LOG_KEY);
+      return data ? JSON.parse(data) : [];
+    } catch {
+      return [];
+    }
+  },
+
+  /**
+   * Clear all stored error logs
+   */
+  clearErrorLog(): void {
+    localStorage.removeItem(ERROR_LOG_KEY);
+  },
+
+  /**
+   * Send error to backend API for persistent logging
+   */
+  async sendToBackend(entry: ErrorLogEntry): Promise<void> {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    if (!apiUrl) return;
+
+    try {
+      await fetch(`${apiUrl}/errors/log`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(entry),
+      });
+    } catch {
+      // Fail silently - backend logging is best-effort
+    }
+  },
+};
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -60,9 +197,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       timestamp: new Date().toISOString(),
     });
 
-    // TODO: Enviar a servicio de logging (Sentry, LogRocket, etc.)
-    // Ejemplo:
-    // Sentry.captureException(error, { extra: errorInfo });
+    // Send to error logging service (supports Sentry, LogRocket, backend API)
+    errorLoggingService.captureException(error, {
+      componentStack: errorInfo.componentStack || undefined,
+    });
 
     this.setState({
       errorInfo,

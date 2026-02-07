@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useData } from "@/app/lib/data-context";
 import { Button } from "@/app/components/ui/button";
 import {
   Dialog,
@@ -50,6 +51,9 @@ interface IntegracionesDisenadorProps {
 }
 
 export function IntegracionesDisenador({ proyectoActual }: IntegracionesDisenadorProps) {
+  // Obtener datos del contexto para la exportación
+  const { suites, cases, executions, defects } = useData();
+
   // Estado para Postman
   const [modalPostmanAbierto, setModalPostmanAbierto] = useState(false);
   const [modalConfigAbierto, setModalConfigAbierto] = useState(false);
@@ -160,17 +164,22 @@ export function IntegracionesDisenador({ proyectoActual }: IntegracionesDisenado
       // Importar dinámicamente el servicio de exportación
       const { exportProjectComplete } = await import("@/services/export-service");
       
-      // Nota: Aquí deberías obtener los datos reales del contexto
-      // Por ahora usamos arrays vacíos, pero en producción deberías:
-      // const { suites, cases, executions, defects } = useData();
-      // y filtrarlos por proyectoActual.id
-      
+      // Filter data by current project ID
+      const projectSuites = suites.filter(s => s.project_id === proyectoActual.id);
+      const projectCases = cases.filter(c => c.project_id === proyectoActual.id);
+      const projectExecutions = executions.filter(e => e.project_id === proyectoActual.id);
+      // Defects are linked via execution, filter by execution IDs
+      const projectExecutionIds = new Set(projectExecutions.map(e => e.id));
+      const projectDefects = defects.filter(d =>
+        d.id && projectExecutionIds.has((d as any).execution_id || '')
+      );
+
       await exportProjectComplete(
         proyectoActual,
-        [], // TODO: filtrar suites por proyecto
-        [], // TODO: filtrar cases por proyecto
-        [], // TODO: filtrar executions por proyecto
-        []  // TODO: filtrar defects por proyecto
+        projectSuites,
+        projectCases,
+        projectExecutions,
+        projectDefects
       );
 
       toast.success("Proyecto exportado exitosamente", {
